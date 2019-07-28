@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Project1.Work;
 using System.Data.SqlClient;
+using Project1.ADONetCRUDs;
 
 namespace Project1
 {
@@ -61,7 +62,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             Area = int.Parse(Console.ReadLine())
                         };
-                        InsertData(toAdd);
+                        CountryDbCommands.InsertData(toAdd);
                         break;
                     case 2:
                         //UpdateCountry
@@ -74,7 +75,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             Area = int.Parse(Console.ReadLine())
                         };
-                        UpdateData(ID, toUpdate);
+                        CountryDbCommands.UpdateData(ID, toUpdate);
                         break;
 
                     case 3:
@@ -85,13 +86,13 @@ namespace Project1
                             ID = int.Parse(Console.ReadLine()),
 
                         };
-                        DeleteData(toDelete.ID);
+                        CountryDbCommands.DeleteData(toDelete.ID);
                         break;
 
                     case 4:
 
                         // ReadCountry
-                        List<Country> countries = GetTests();
+                        List<Country> countries = CountryDbCommands.GetTests();
                         foreach (Country country in countries)
                         {
                             Console.WriteLine(country.Description);
@@ -407,80 +408,6 @@ FROM [Human]
             }
         }
 
-        //CRUD of Country
-        private static List<Country> GetTests()
-        {
-            string sqlString = @"
-SELECT [ID], [Name], [AnimalsName], [Area]
-FROM [Country]
-";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(sqlString, connection);
-
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                List<Country> countries = new List<Country>();
-                while (reader.Read())
-                {
-                    Country country = new Country
-                    {
-                        ID = int.Parse(reader["ID"].ToString()),
-                        Name = reader["Name"].ToString(),
-                        AnimalsName = reader["AnimalsName"].ToString(),
-                        Area = int.Parse(reader["Area"].ToString()),
-                    };
-                    countries.Add(country);
-
-                }
-                return countries;
-
-            }
-
-        }
-        private static void InsertData(Country country)
-        {
-            string query = "INSERT INTO  dbo.Country(Name,AnimalsName, Area) VALUES(@Name,@AnimalsName,@Area)";
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, cn))
-            {
-                cmd.Parameters.AddWithValue("@Name", country.Name);
-                cmd.Parameters.AddWithValue("@AnimalsName", country.AnimalsName);
-                cmd.Parameters.AddWithValue("@Area", country.Area);
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-        }
-        private static void UpdateData(int oldID, Country country)
-        {
-            string query = "UPDATE Country SET Name = @NewName, AnimalsName = @AnimalsName, Area = @Area WHERE ID = @oldID";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, connection))
-            {
-                cmd.Parameters.AddWithValue("@oldID", oldID);
-                cmd.Parameters.AddWithValue("@NewName", country.Name);
-                cmd.Parameters.AddWithValue("@AnimalsName", country.AnimalsName);
-                cmd.Parameters.AddWithValue("@Area", country.Area);
-                connection.Open();
-
-                cmd.ExecuteNonQuery();
-
-            }
-        }
-        private static void DeleteData(int ID)
-        {
-
-            string query = "DELETE FROM Country WHERE ID = @ID";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, connection))
-            {
-                cmd.Parameters.AddWithValue("@ID", ID);
-                connection.Open();
-                cmd.ExecuteNonQuery();
-
-            }
-        }
 
         //CRUD of Building
         private static List<Building> GetTests1()
