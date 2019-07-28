@@ -302,6 +302,7 @@ namespace Project1
             }
         }
 
+
         //CRUD of Human
         private static List<Human> GetHumansByApartment(int appartmentId)
         {
