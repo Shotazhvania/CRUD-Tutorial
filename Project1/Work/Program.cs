@@ -128,7 +128,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             BuildDate = Convert.ToDateTime(Console.ReadLine())
                         };
-                        InsertData(toAdd);
+                        BuildingDbCommands.InsertBuilding(toAdd);
                         break;
                     case 2:
                         //UpdateBuilding
@@ -141,7 +141,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             BuildDate = Convert.ToDateTime(Console.ReadLine())
                         };
-                        UpdateData(ID, toUpdate);
+                        BuildingDbCommands.UpdateBuilding(ID, toUpdate);
                         break;
                     case 3:
                         //DeleteBuilding
@@ -151,12 +151,12 @@ namespace Project1
                             ID = int.Parse(Console.ReadLine()),
 
                         };
-                        DeleteData1(toDelete.ID);
+                        BuildingDbCommands.DeleteBuilding(toDelete.ID);
                         break;
                     case 4:
 
                         // ReadBuilding
-                        List<Building> buildings = GetTests1();
+                        List<Building> buildings = BuildingDbCommands.GetBuilding();
                         foreach (Building building in buildings)
                         {
                             Console.WriteLine(building.Description);
@@ -192,7 +192,7 @@ namespace Project1
                             AppartmentNo = int.Parse(Console.ReadLine()),
                             Area = int.Parse(Console.ReadLine()),
                         };
-                        InsertData(toAdd);
+                        AppartmentDbCommands.InsertData(toAdd);
                         break;
                     case 2:
                         //UpdateAppartament
@@ -205,7 +205,7 @@ namespace Project1
                             AppartmentNo = int.Parse(Console.ReadLine()),
                             Area = int.Parse(Console.ReadLine()),
                         };
-                        UpdateData(ID, toUpdate);
+                        AppartmentDbCommands.UpdateData(ID, toUpdate);
                         break;
                     case 3:
                         //DeleteAppartament
@@ -215,12 +215,12 @@ namespace Project1
                             ID = int.Parse(Console.ReadLine()),
 
                         };
-                        DeleteData2(toDelete.ID);
+                        AppartmentDbCommands.DeleteData2(toDelete.ID);
                         break;
                     case 4:
 
                         // ReadAppartament
-                        List<Appartment> appartments = GetTests2();
+                        List<Appartment> appartments = AppartmentDbCommands.GetTests2();
                         foreach (Appartment appartment in appartments)
                         {
                             Console.WriteLine(appartment.Description);
@@ -257,7 +257,7 @@ namespace Project1
                             BirthDate = Convert.ToDateTime(Console.ReadLine()),
                             AppartmentId = int.Parse(Console.ReadLine())
                         };
-                        InsertHuman(toAdd);
+                        HumanDbCommands.InsertHuman(toAdd);
                         break;
                     case 2:
                         //UpdateHuman
@@ -270,7 +270,7 @@ namespace Project1
                             BirthDate = Convert.ToDateTime(Console.ReadLine()),
                             AppartmentId = int.Parse(Console.ReadLine())
                         };
-                        UpdateHuman(ID, toUpdate);
+                        HumanDbCommands.UpdateHuman(ID, toUpdate);
                         break;
 
                     case 3:
@@ -281,13 +281,13 @@ namespace Project1
                             Id = int.Parse(Console.ReadLine()),
 
                         };
-                        DeleteHuman(toDelete.Id);
+                        HumanDbCommands.DeleteHuman(toDelete.Id);
                         break;
 
                     case 4:
 
                         // ReadHuman
-                        List<Human> humans = GetHumans();
+                        List<Human> humans = HumanDbCommands.GetHumans();
                         foreach (Human human in humans)
                         {
                             Console.WriteLine(human.Description);
@@ -302,262 +302,6 @@ namespace Project1
                 }
             }
         }
-
-
-        //CRUD of Human
-        private static List<Human> GetHumansByApartment(int appartmentId)
-        {
-            string sqlString = @"
-SELECT [Id], [Name], [BirthDate], [AppartmentId]
-FROM [Human]
-WHERE [AppartmentId] = @AppartmentId
-";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(sqlString, connection);
-                command.Parameters.AddWithValue("@AppartmentId", appartmentId);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                List<Human> humans = new List<Human>();
-                while (reader.Read())
-                {
-                    Human human = new Human
-                    {
-                        Id = int.Parse(reader["Id"].ToString()),
-                        Name = reader["Name"].ToString(),
-                        BirthDate = Convert.ToDateTime(reader["BirthDate"].ToString()),
-                        AppartmentId = int.Parse(reader["AppartmentId"].ToString()),
-                    };
-                    humans.Add(human);
-
-                }
-                return humans;
-
-            }
-        }
-        private static List<Human> GetHumans()
-        {
-            string sqlString = @"
-SELECT [Id], [Name], [BirthDate], [AppartmentId]
-FROM [Human]
-";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(sqlString, connection);
-
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                List<Human> humans = new List<Human>();
-                while (reader.Read())
-                {
-                    Human human = new Human
-                    {
-                        Id = int.Parse(reader["Id"].ToString()),
-                        Name = reader["Name"].ToString(),
-                        BirthDate = Convert.ToDateTime(reader["BirthDate"].ToString()),
-                        AppartmentId = int.Parse(reader["AppartmentId"].ToString()),
-                    };
-                    humans.Add(human);
-
-                }
-                return humans;
-
-            }
-
-        }
-        private static void InsertHuman(Human human)
-        {
-            string query = "INSERT INTO  dbo.Human(Name,BirthDate, AppartmentId) VALUES(@Name,@BirthDate,@AppartmentId)";
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, cn))
-            {
-                cmd.Parameters.AddWithValue("@Name", human.Name);
-                cmd.Parameters.AddWithValue("@BirthDate", human.BirthDate);
-                cmd.Parameters.AddWithValue("@AppartmentId", human.AppartmentId);
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-        }
-        private static void UpdateHuman(int oldiD, Human human)
-        {
-            string query = "UPDATE Human SET Name = @NewName, BirthDate = @BirthDate, AppartmentId = @AppartmentId WHERE ID = @oldiD";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, connection))
-            {
-                cmd.Parameters.AddWithValue("@oldiD", oldiD);
-                cmd.Parameters.AddWithValue("@NewName", human.Name);
-                cmd.Parameters.AddWithValue("@BirthDate", human.BirthDate);
-                cmd.Parameters.AddWithValue("@AppartmentId", human.AppartmentId);
-                connection.Open();
-
-                cmd.ExecuteNonQuery();
-
-            }
-        }
-        private static void DeleteHuman(int id)
-        {
-            string query = "DELETE FROM Human WHERE id = @id";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, connection))
-            {
-                cmd.Parameters.AddWithValue("@id", id);
-                connection.Open();
-                cmd.ExecuteNonQuery();
-
-            }
-        }
-
-
-        //CRUD of Building
-        private static List<Building> GetTests1()
-        {
-            string sqlString = @"
-SELECT [ID], [Address], [AnimalsName], [BuildDate]
-FROM [Building]
-";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(sqlString, connection);
-
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                List<Building> buildings = new List<Building>();
-                while (reader.Read())
-                {
-                    Building building = new Building
-                    {
-                        ID = int.Parse(reader["ID"].ToString()),
-                        Address = reader["Address"].ToString(),
-                        AnimalsName = reader["AnimalsName"].ToString(),
-                        BuildDate = Convert.ToDateTime(reader["BuildDate"].ToString()),
-                    };
-                    buildings.Add(building);
-
-                }
-                return buildings;
-
-            }
-
-        }
-        private static void InsertData(Building building)
-        {
-            string query = "INSERT INTO  dbo.Building(Address,AnimalsName, BuildDate) VALUES(@Address,@AnimalsName,@BuildDate)";
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, cn))
-            {
-                cmd.Parameters.AddWithValue("@Address", building.Address);
-                cmd.Parameters.AddWithValue("@AnimalsName", building.AnimalsName);
-                cmd.Parameters.AddWithValue("@BuildDate", building.BuildDate);
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-        }
-        private static void UpdateData(int oldID, Building building)
-        {
-            string query = "UPDATE Building SET Address = @NewAddress, AnimalsName = @AnimalsName, BuildDate = @BuildDate WHERE ID = @oldID";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, connection))
-            {
-                cmd.Parameters.AddWithValue("@oldID", oldID);
-                cmd.Parameters.AddWithValue("@NewAddress", building.Address);
-                cmd.Parameters.AddWithValue("@AnimalsName", building.AnimalsName);
-                cmd.Parameters.AddWithValue("@BuildDate", building.BuildDate);
-                connection.Open();
-
-                cmd.ExecuteNonQuery();
-
-            }
-        }
-        private static void DeleteData1(int ID)
-        {
-
-            string query = "DELETE FROM Building WHERE ID = @ID";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, connection))
-            {
-                cmd.Parameters.AddWithValue("@ID", ID);
-                connection.Open();
-                cmd.ExecuteNonQuery();
-
-            }
-        }
-
-        //CRUD of Appartament
-        private static List<Appartment> GetTests2()
-        {
-            string sqlString = @"
-SELECT [ID], [AppartmentNo], [Area]
-FROM [Appartament]
-";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand(sqlString, connection);
-
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                List<Appartment> appartments = new List<Appartment>();
-                while (reader.Read())
-                {
-                    Appartment appartment = new Appartment
-                    {
-                        ID = int.Parse(reader["ID"].ToString()),
-                        AppartmentNo = int.Parse(reader["AppartmentNo"].ToString()),
-                        Area = int.Parse(reader["Area"].ToString()),
-                    };
-                    appartment.Humans = GetHumansByApartment(appartment.ID);
-
-                    appartments.Add(appartment);
-
-                }
-                return appartments;
-
-            }
-
-        }
-        private static void InsertData(Appartment appartment)
-        {
-            string query = "INSERT INTO  dbo.Appartament(AppartmentNo,Area) VALUES(@AppartmentNo,@Area)";
-            using (SqlConnection cn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, cn))
-            {
-                cmd.Parameters.AddWithValue("@AppartmentNo", appartment.AppartmentNo);
-                cmd.Parameters.AddWithValue("@Area", appartment.Area);
-                cn.Open();
-                cmd.ExecuteNonQuery();
-                cn.Close();
-            }
-        }
-        private static void UpdateData(int oldID, Appartment appartment)
-        {
-            string query = "UPDATE Appartament SET AppartmentNo = @NewAppartmentNo, Are = @Area, HumansName = @HumansName BirthDate = @BirthDate WHERE ID = @oldID";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, connection))
-            {
-                cmd.Parameters.AddWithValue("@oldID", oldID);
-                cmd.Parameters.AddWithValue("@NewAppartmentNo", appartment.AppartmentNo);
-                cmd.Parameters.AddWithValue("@Area", appartment.Area);
-                // cmd.Parameters.AddWithValue("@HumansName", appartment.HumansName);
-                //cmd.Parameters.AddWithValue("@BirthDate", appartment.BirthDate);
-                connection.Open();
-
-                cmd.ExecuteNonQuery();
-
-            }
-        }
-        private static void DeleteData2(int ID)
-        {
-
-            string query = "DELETE FROM Appartament WHERE ID = @ID";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand(query, connection))
-            {
-                cmd.Parameters.AddWithValue("@ID", ID);
-                connection.Open();
-                cmd.ExecuteNonQuery();
-
-            }
-        }
+       
     }
 }
