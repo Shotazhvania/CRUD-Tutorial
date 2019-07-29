@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using Project1.Work;
 using System.Data.SqlClient;
 using Project1.ADONetCRUDs;
+using Project1.DapperCRUDs;
 
 namespace Project1
 {
     public class Program
     {
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
+
+        static CRUDInterfaces.IAppartmentCRUD appartmentDb = new DapperCRUDs.AppartmentDbCommands();
+        static CRUDInterfaces.IBuildingCRUD buildingtDb = new ADONetCRUDs.BuildingDbCommands();
+        static CRUDInterfaces.ICountryCRUD  countrytDb = new ADONetCRUDs.CountryDbCommands();
+        static CRUDInterfaces.IHumanCRUD humantDb = new DapperCRUDs.HumanDbCommands();
+
         public static void Main(string[] args)
         {
             bool Numb2 = true;
             while (Numb2)
             {
-                Console.WriteLine("Which information Do you want to fill? : Country(1), Building(2), Appartment(3), Human(4)");
+                Console.WriteLine("Which information Do you want to fill? : Country(1), Building(2), Appartment(3), Human(4), Exit(5)");
                 int Number;
                 Number = int.Parse(Console.ReadLine());
                 switch (Number)
@@ -33,12 +40,15 @@ namespace Project1
                     case 4:
                         ProcessHumans();
                         break;
-                    default:
-                        Console.WriteLine("Nothing Info Found !!!");
+                    default:                       
+                        Console.WriteLine("Exit !");
                         break;
+                        
 
                 }
+                
             }
+
             Console.ReadKey();
         }
 
@@ -62,7 +72,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             Area = int.Parse(Console.ReadLine())
                         };
-                        CountryDbCommands.InsertData(toAdd);
+                        countrytDb.InsertData(toAdd);
                         break;
                     case 2:
                         //UpdateCountry
@@ -75,7 +85,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             Area = int.Parse(Console.ReadLine())
                         };
-                        CountryDbCommands.UpdateData(ID, toUpdate);
+                        countrytDb.UpdateData(ID, toUpdate);
                         break;
 
                     case 3:
@@ -86,13 +96,13 @@ namespace Project1
                             ID = int.Parse(Console.ReadLine()),
 
                         };
-                        CountryDbCommands.DeleteData(toDelete.ID);
+                        countrytDb.DeleteData(toDelete.ID);
                         break;
 
                     case 4:
 
                         // ReadCountry
-                        List<Country> countries = CountryDbCommands.GetTests();
+                        List<Country> countries = countrytDb.GetTests();
                         foreach (Country country in countries)
                         {
                             Console.WriteLine(country.Description);
@@ -128,7 +138,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             BuildDate = Convert.ToDateTime(Console.ReadLine())
                         };
-                        BuildingDbCommands.InsertBuilding(toAdd);
+                        buildingtDb.InsertBuilding(toAdd);
                         break;
                     case 2:
                         //UpdateBuilding
@@ -141,7 +151,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             BuildDate = Convert.ToDateTime(Console.ReadLine())
                         };
-                        BuildingDbCommands.UpdateBuilding(ID, toUpdate);
+                        buildingtDb.UpdateBuilding(ID, toUpdate);
                         break;
                     case 3:
                         //DeleteBuilding
@@ -151,12 +161,12 @@ namespace Project1
                             ID = int.Parse(Console.ReadLine()),
 
                         };
-                        BuildingDbCommands.DeleteBuilding(toDelete.ID);
+                        buildingtDb.DeleteBuilding(toDelete.ID);
                         break;
                     case 4:
 
                         // ReadBuilding
-                        List<Building> buildings = BuildingDbCommands.GetBuilding();
+                        List<Building> buildings = buildingtDb.GetBuilding();
                         foreach (Building building in buildings)
                         {
                             Console.WriteLine(building.Description);
@@ -192,7 +202,7 @@ namespace Project1
                             AppartmentNo = int.Parse(Console.ReadLine()),
                             Area = int.Parse(Console.ReadLine()),
                         };
-                        AppartmentDbCommands.InsertData(toAdd);
+                        appartmentDb.InsertData(toAdd);
                         break;
                     case 2:
                         //UpdateAppartament
@@ -205,7 +215,7 @@ namespace Project1
                             AppartmentNo = int.Parse(Console.ReadLine()),
                             Area = int.Parse(Console.ReadLine()),
                         };
-                        AppartmentDbCommands.UpdateData(ID, toUpdate);
+                        appartmentDb.UpdateData(ID, toUpdate);
                         break;
                     case 3:
                         //DeleteAppartament
@@ -215,12 +225,12 @@ namespace Project1
                             ID = int.Parse(Console.ReadLine()),
 
                         };
-                        AppartmentDbCommands.DeleteData2(toDelete.ID);
+                        appartmentDb.DeleteData2(toDelete.ID);
                         break;
                     case 4:
 
                         // ReadAppartament
-                        List<Appartment> appartments = AppartmentDbCommands.GetTests2();
+                        List<Appartment> appartments = appartmentDb.GetTests2();
                         foreach (Appartment appartment in appartments)
                         {
                             Console.WriteLine(appartment.Description);
@@ -257,7 +267,7 @@ namespace Project1
                             BirthDate = Convert.ToDateTime(Console.ReadLine()),
                             AppartmentId = int.Parse(Console.ReadLine())
                         };
-                        HumanDbCommands.InsertHuman(toAdd);
+                        humantDb.InsertHuman(toAdd);
                         break;
                     case 2:
                         //UpdateHuman
@@ -270,7 +280,7 @@ namespace Project1
                             BirthDate = Convert.ToDateTime(Console.ReadLine()),
                             AppartmentId = int.Parse(Console.ReadLine())
                         };
-                        HumanDbCommands.UpdateHuman(ID, toUpdate);
+                        humantDb.UpdateHuman(ID, toUpdate);
                         break;
 
                     case 3:
@@ -281,13 +291,13 @@ namespace Project1
                             Id = int.Parse(Console.ReadLine()),
 
                         };
-                        HumanDbCommands.DeleteHuman(toDelete.Id);
+                        humantDb.DeleteHuman(toDelete.Id);
                         break;
 
                     case 4:
 
                         // ReadHuman
-                        List<Human> humans = HumanDbCommands.GetHumans();
+                        List<Human> humans = humantDb.GetHumans();
                         foreach (Human human in humans)
                         {
                             Console.WriteLine(human.Description);

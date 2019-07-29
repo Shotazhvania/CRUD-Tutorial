@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Project1.ADONetCRUDs
 {
-    public static class AppartmentDbCommands
+    public class AppartmentDbCommands : CRUDInterfaces.IAppartmentCRUD
     {
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
         //CRUD of Appartment
-        public static List<Appartment> GetTests2()
+        public List<Appartment> GetTests2()
         {
             string sqlString = @"
 SELECT [ID], [AppartmentNo], [Area]
@@ -40,7 +40,7 @@ FROM [Appartament]
             }
 
         }
-        public static void InsertData(Appartment appartment)
+        public void InsertData(Appartment appartment)
         {
             string query = "INSERT INTO  dbo.Appartament(AppartmentNo,Area) VALUES(@AppartmentNo,@Area)";
             using (SqlConnection cn = new SqlConnection(connectionString))
@@ -53,7 +53,7 @@ FROM [Appartament]
                 cn.Close();
             }
         }
-        public static void UpdateData(int oldID, Appartment appartment)
+        public void UpdateData(int oldID, Appartment appartment)
         {
             string query = "UPDATE Appartament SET AppartmentNo = @NewAppartmentNo, Are = @Area, HumansName = @HumansName BirthDate = @BirthDate WHERE ID = @oldID";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -70,7 +70,7 @@ FROM [Appartament]
 
             }
         }
-        public static void DeleteData2(int ID)
+        public void DeleteData2(int ID)
         {
 
             string query = "DELETE FROM Appartament WHERE ID = @ID";
