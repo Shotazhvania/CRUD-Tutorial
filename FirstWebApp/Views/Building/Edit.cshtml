@@ -1,0 +1,38 @@
+﻿@model Project1.Building
+
+<h4>Building</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ID" class="control-label"></label>
+                <input readonly="readonly" asp-for="ID" class="form-control" />
+                <span asp-validation-for="ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnimalsName" class="control-label"></label>
+                <input asp-for="AnimalsName" class="form-control" />
+                <span asp-validation-for="AnimalsName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BuildDate" class="control-label"></label>
+                <input asp-for="BuildDate" class="form-control" />
+                <span asp-validation-for="BuildDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="List">Back to List</a>
+</div>

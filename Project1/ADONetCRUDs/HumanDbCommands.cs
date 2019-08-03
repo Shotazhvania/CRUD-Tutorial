@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Project1.ADONetCRUDs
 {
-    public static class HumanDbCommands
+    public  class HumanDbCommands : CRUDInterfaces.IHumanCRUD
     {
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
 
         //CRUD of Human
-        public static List<Human> GetHumansByApartment(int appartmentId)
+        public  List<Human> GetHumansByApartment(int appartmentId)
         {
             string sqlString = @"
 SELECT [Id], [Name], [BirthDate], [AppartmentId]
@@ -40,7 +40,7 @@ WHERE [AppartmentId] = @AppartmentId
 
             }
         }
-        public static List<Human> GetHumans()
+        public  List<Human> GetHumans()
         {
             string sqlString = @"
 SELECT [Id], [Name], [BirthDate], [AppartmentId]
@@ -70,7 +70,7 @@ FROM [Human]
             }
 
         }
-        public static void InsertHuman(Human human)
+        public  void InsertHuman(Human human)
         {
             string query = "INSERT INTO  dbo.Human(Name,BirthDate, AppartmentId) VALUES(@Name,@BirthDate,@AppartmentId)";
             using (SqlConnection cn = new SqlConnection(connectionString))
@@ -84,7 +84,7 @@ FROM [Human]
                 cn.Close();
             }
         }
-        public static void UpdateHuman(int oldiD, Human human)
+        public  void UpdateHuman(int oldiD, Human human)
         {
             string query = "UPDATE Human SET Name = @NewName, BirthDate = @BirthDate, AppartmentId = @AppartmentId WHERE ID = @oldiD";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -100,7 +100,7 @@ FROM [Human]
 
             }
         }
-        public static void DeleteHuman(int id)
+        public  void DeleteHuman(int id)
         {
             string query = "DELETE FROM Human WHERE id = @id";
             using (SqlConnection connection = new SqlConnection(connectionString))

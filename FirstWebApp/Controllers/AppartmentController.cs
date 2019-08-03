@@ -10,21 +10,21 @@ namespace FirstWebApp.Controllers
 {
     public class AppartmentController : Controller
     {
-        public IActionResult GetGetTests2()
+        public IActionResult GetAppartment()
         {
-            List<Appartment> appartments = AppartmentDbCommands.GetTests2();
+            List<Appartment> appartments = new AppartmentDbCommands().GetAppartment();
             return Json(appartments);
         }
 
         public IActionResult List()
         {
-            List<Appartment> appartments = AppartmentDbCommands.GetTests2();
+            List<Appartment> appartments = new AppartmentDbCommands().GetAppartment();
             return View(appartments);
 
         }
         public IActionResult Details(int id)
         {
-            List<Appartment> appartments = AppartmentDbCommands.GetTests2();
+            List<Appartment> appartments =  new AppartmentDbCommands().GetAppartment();
             Appartment appartment = appartments.First(a => a.ID == id);
             return View(appartment);
         }
@@ -32,7 +32,7 @@ namespace FirstWebApp.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            List<Appartment> appartments = AppartmentDbCommands.GetTests2();
+            List<Appartment> appartments = new AppartmentDbCommands().GetAppartment();
             Appartment appartment = appartments.First(a => a.ID == id);
             return View(appartment);
         }
@@ -40,13 +40,13 @@ namespace FirstWebApp.Controllers
         [HttpPost]
         public IActionResult Edit(Appartment app)
         {
-            new Project1.ADONetCRUDs.AppartmentDbCommands().UpdateData(app.ID, app);
+            new Project1.ADONetCRUDs.AppartmentDbCommands().UpdateAppartment(app.ID, app);
             return RedirectToAction("List");
         }
 
         public IActionResult Delete(int id)
         {
-            new Project1.ADONetCRUDs.AppartmentDbCommands().DeleteData2(id);
+            new Project1.ADONetCRUDs.AppartmentDbCommands().DeleteAppartment(id);
             return RedirectToAction("List");
         }
         [HttpGet]
@@ -58,7 +58,7 @@ namespace FirstWebApp.Controllers
         [HttpPost]
         public IActionResult Create(Appartment appartment)
         {
-            new Project1.ADONetCRUDs.AppartmentDbCommands().InsertData(appartment);
+            new Project1.ADONetCRUDs.AppartmentDbCommands().InsertAppartment(appartment);
             return RedirectToAction("List");
         }
     }

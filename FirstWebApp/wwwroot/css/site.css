@@ -35,3 +35,46 @@ body {
         display: none;
     }
 }
+
+<title > Dropdown Menu Using CSS</title >
+<style type="text/css" >
+#nav {
+    width: 500px;
+    margin: auto;
+}
+
+#nav ul {
+    padding: 0;
+    list-style: none;
+}
+
+    #nav ul li {
+        float: left;
+        text-align: center;
+        width: 120px;
+        margin: 1px;
+    }
+
+        #nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-family: Calibri;
+            background: #0a0;
+            display: block;
+            padding: 10px;
+        }
+
+            #nav ul li a:hover {
+                background: #0e0;
+                color: #000;
+            }
+
+        #nav ul li ul {
+            display: none;
+        }
+
+        #nav ul li:hover ul {
+            display: block;
+        }
+
+</style >

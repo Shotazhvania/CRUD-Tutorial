@@ -9,10 +9,10 @@ namespace Project1
         public List<Building> buildings;
 
         public int ID { get; set; }
-        public string Address { get; internal set; }
+        public string Address { get;  set; }
         public string AnimalsName { get; set; }
-        public DateTime BuildDate { get; internal set; }
-        public Appartment[] Appartments { get; internal set; }
+        public DateTime BuildDate { get;  set; }
+        public Appartment[] Appartments { get;  set; }
 
         public string Description
         {

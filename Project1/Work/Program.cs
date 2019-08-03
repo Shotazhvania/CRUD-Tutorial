@@ -80,7 +80,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             Area = int.Parse(Console.ReadLine())
                         };
-                        countrytDb.InsertData(toAdd);
+                        countrytDb.InsertCountry(toAdd);
                         break;
                     case 2:
                         //UpdateCountry
@@ -93,7 +93,7 @@ namespace Project1
                             AnimalsName = Console.ReadLine(),
                             Area = int.Parse(Console.ReadLine())
                         };
-                        countrytDb.UpdateData(ID, toUpdate);
+                        countrytDb.UpdateCountry(ID, toUpdate);
                         break;
 
                     case 3:
@@ -104,13 +104,13 @@ namespace Project1
                             ID = int.Parse(Console.ReadLine()),
 
                         };
-                        countrytDb.DeleteData(toDelete.ID);
+                        countrytDb.DeleteCountry(toDelete.ID);
                         break;
 
                     case 4:
 
                         // ReadCountry
-                        List<Country> countries = countrytDb.GetTests();
+                        List<Country> countries = countrytDb.GetCountry();
                         foreach (Country country in countries)
                         {
                             Console.WriteLine(country.Description);
@@ -210,7 +210,7 @@ namespace Project1
                             AppartmentNo = int.Parse(Console.ReadLine()),
                             Area = int.Parse(Console.ReadLine()),
                         };
-                        appartmentDb.InsertData(toAdd);
+                        appartmentDb.InsertAppartment(toAdd);
                         break;
                     case 2:
                         //UpdateAppartament
@@ -223,7 +223,7 @@ namespace Project1
                             AppartmentNo = int.Parse(Console.ReadLine()),
                             Area = int.Parse(Console.ReadLine()),
                         };
-                        appartmentDb.UpdateData(ID, toUpdate);
+                        appartmentDb.UpdateAppartment(ID, toUpdate);
                         break;
                     case 3:
                         //DeleteAppartament
@@ -233,12 +233,12 @@ namespace Project1
                             ID = int.Parse(Console.ReadLine()),
 
                         };
-                        appartmentDb.DeleteData2(toDelete.ID);
+                        appartmentDb.DeleteAppartment(toDelete.ID);
                         break;
                     case 4:
 
                         // ReadAppartament
-                        List<Appartment> appartments = appartmentDb.GetTests2();
+                        List<Appartment> appartments = appartmentDb.GetAppartment();
                         foreach (Appartment appartment in appartments)
                         {
                             Console.WriteLine(appartment.Description);

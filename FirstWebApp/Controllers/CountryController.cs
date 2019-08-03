@@ -12,27 +12,57 @@ namespace FirstWebApp.Controllers
     public class CountryController : Controller
     {
             //Country
-            public class WrapperCountry
+            public IActionResult GetCountry()
             {
-                public List<Country> Countries { get; set; }
-            }
-
-            public IActionResult GetTests()
-            {
-                List<Country> countries = Project1.DapperCRUDs.CountryDbCommands.GetCountry();
+                List<Country> countries = new Project1.ADONetCRUDs.CountryDbCommands().GetCountry();
                 return Json(countries);
             }
 
-            public IActionResult IndexCountry()
+            public IActionResult List()
             {
-                List<Country> countries = Project1.DapperCRUDs.CountryDbCommands.GetCountry();
-                return View(new Country
-                {
-                    countries = countries
-
-                });
+                List<Country> countries = new Project1.ADONetCRUDs.CountryDbCommands().GetCountry();
+                return View(countries);
 
             }
-        
+            public IActionResult Details(int id)
+            {
+                List<Country> countries = new Project1.ADONetCRUDs.CountryDbCommands().GetCountry();
+                Country country = countries.First(a => a.ID == id);
+                return View(country);
+            }
+
+            [HttpGet]
+            public IActionResult Edit(int id)
+            {
+                 List<Country> countries = new Project1.ADONetCRUDs.CountryDbCommands().GetCountry();
+                 Country country = countries.First(a => a.ID == id);
+                 return View(country);
+            }
+
+            [HttpPost]
+            public IActionResult Edit(Country app)
+            {
+                new Project1.ADONetCRUDs.CountryDbCommands().UpdateCountry(app.ID, app);
+                return RedirectToAction("List");
+            }
+
+            public IActionResult Delete(int id)
+            {
+                new Project1.ADONetCRUDs.CountryDbCommands().DeleteCountry(id);
+                return RedirectToAction("List");
+            }
+            [HttpGet]
+            public IActionResult Create()
+            {
+                return View();
+            }
+
+            [HttpPost]
+            public IActionResult Create(Country country)
+            {
+                new Project1.ADONetCRUDs.CountryDbCommands().InsertCountry(country);
+                return RedirectToAction("List");
+            }
     }
+
 }

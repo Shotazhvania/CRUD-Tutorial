@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using FirstWebApp.Models;
-using Project1;
 using Project1.ADONetCRUDs;
-using Project1.Work;
-using BuildingDbCommands = Project1.DapperCRUDs.BuildingDbCommands;
-using AppartmentDbCommands = Project1.DapperCRUDs.AppartmentDbCommands;
 using FirstWebApp.ViewModels;
 
 namespace FirstWebApp.Controllers
@@ -20,10 +12,10 @@ namespace FirstWebApp.Controllers
         {
             return View(new HomeIndexViewModel
             {
-                Humen = HumanDbCommands.GetHumans(),
-                Appartments = AppartmentDbCommands.GetTests2(),
-                Countries = new CountryDbCommands().GetTests(),
-                Buildings = BuildingDbCommands.GetBuilding()
+                Humen = new HumanDbCommands().GetHumans(),
+                Appartments = new AppartmentDbCommands().GetAppartment(),
+                Countries = new CountryDbCommands().GetCountry(),
+                Buildings = new BuildingDbCommands().GetBuilding()
             });
         }
         public IActionResult Indexs()

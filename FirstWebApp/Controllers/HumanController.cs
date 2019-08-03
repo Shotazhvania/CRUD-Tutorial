@@ -13,29 +13,57 @@ namespace FirstWebApp.Controllers
     //Human
     public class HumanController : Controller
     {
-        public class wrapper
+        public IActionResult GetHumans()
         {
-            public List<Human> humen { get; set; }
-        }
-
-        public IActionResult gethumans()
-        {
-
-            List<Human> humen = HumanDbCommands.GetHumans();
-
+            List<Human> humen = new HumanDbCommands().GetHumans();
             return Json(humen);
         }
 
-        public IActionResult index()
+        public IActionResult List()
         {
-            // listis wamogeba bazidan
-            List<Human> humen = HumanDbCommands.GetHumans();
+            List<Human> humen = new HumanDbCommands().GetHumans();
+            return View(humen);
 
-            return View(new wrapper
-            {
-                humen = humen
-            });
         }
-    
+        public IActionResult Details(int id)
+        {
+            List<Human> humen = new HumanDbCommands().GetHumans();
+            Human human = humen.First(a => a.ID == id);
+            return View(human);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            List<Human> humen = new HumanDbCommands().GetHumans();
+            Human human = humen.First(a => a.ID == id);
+            return View(human);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Human app)
+        {
+            new HumanDbCommands().UpdateHuman(app.ID, app);
+            return RedirectToAction("List");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            new HumanDbCommands().DeleteHuman(id);
+            return RedirectToAction("List");
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Human human)
+        {
+            new HumanDbCommands().InsertHuman(human);
+            return RedirectToAction("List");
+        }
+
     }
 }

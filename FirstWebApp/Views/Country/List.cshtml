@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Project1.Appartment>
-
+﻿@model IEnumerable<Project1.Work.Country>
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -10,7 +9,10 @@
                 @Html.DisplayNameFor(model => model.ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppartmentNo)
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnimalsName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Area)
@@ -28,7 +30,10 @@
                 @Html.DisplayFor(modelItem => item.ID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AppartmentNo)
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalsName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Area)
@@ -37,10 +42,10 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("Edit appartment", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details appartment", "Details", new {  id=item.ID }) |
-                @Html.ActionLink("Delete appartment", "Delete", new { id = item.ID }, 
-                        new {onclick = "return confirm('Are you sure?');" })
+                @Html.ActionLink("Edit Country", "Edit", new { id=item.ID }) |
+                @Html.ActionLink("Details Country", "Details", new {  id=item.ID  }) |
+                @Html.ActionLink("Delete Country", "Delete", new {  id=item.ID },
+                    new {onclick = "return confirm('Are you sure?');" })
             </td>
         </tr>
 }

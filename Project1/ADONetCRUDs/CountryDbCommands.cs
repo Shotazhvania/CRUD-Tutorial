@@ -1,18 +1,14 @@
 ﻿using Project1.Work;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Text;
 
 namespace Project1.ADONetCRUDs
 {
     public  class CountryDbCommands : CRUDInterfaces.ICountryCRUD
     {
-
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
-
         //CRUD of Country
-        public  List<Country> GetTests()
+        public  List<Country> GetCountry()
         {
             string sqlString = @"
 SELECT [ID], [Name], [AnimalsName], [Area]
@@ -42,7 +38,7 @@ FROM [Country]
             }
 
         }
-        public  void InsertData(Country country)
+        public  void InsertCountry(Country country)
         {
             string query = "INSERT INTO  dbo.Country(Name,AnimalsName, Area) VALUES(@Name,@AnimalsName,@Area)";
             using (SqlConnection cn = new SqlConnection(connectionString))
@@ -56,8 +52,7 @@ FROM [Country]
                 cn.Close();
             }
         }
-
-        public  void UpdateData(int oldID, Country country)
+        public  void UpdateCountry(int oldID,Country country)
         {
             string query = "UPDATE Country SET Name = @NewName, AnimalsName = @AnimalsName, Area = @Area WHERE ID = @oldID";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -73,8 +68,7 @@ FROM [Country]
 
             }
         }
-
-        public  void DeleteData(int ID)
+        public  void DeleteCountry(int ID)
         {
 
             string query = "DELETE FROM Country WHERE ID = @ID";

@@ -6,19 +6,19 @@
     <h3> @Country.Name @Country.AnimalsName @Country.Area </h3>
 }
 
-<h1> Building Database List </h1>
+<h1 style="color:blue"> Building Database List </h1>
 @foreach (var Building in Model.Buildings)
 {
     <h3> @Building.Address @Building.AnimalsName @Building.BuildDate </h3>
 }
 
-<h1> Appartment Database List </h1>
+<h1 style="color: blueviolet"> Appartment Database List </h1>
 @foreach (var Appartment in Model.Appartments)
 {
     <h3> @Appartment.AppartmentNo @Appartment.Area </h3>
 }
 
-<h1> Human Database List </h1>
+<h1 style="color:darkgreen"> Human Database List </h1>
 @foreach (var Human in Model.Humen)
 {
     <h3> @Human.Name @Human.BirthDate @Human.AppartmentId </h3>

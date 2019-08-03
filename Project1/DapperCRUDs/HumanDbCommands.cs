@@ -57,15 +57,11 @@ FROM [Human]
         public  void UpdateHuman(int oldiD, Human human)
         {
             string query = "UPDATE Human SET Name = @NewName, BirthDate = @BirthDate, AppartmentId = @AppartmentId WHERE ID = @oldiD";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            
+            using (SqlConnection connection = new SqlConnection(connectionString))          
             {
-                
                 connection.Open();
 
                 connection.Execute(query, human);
-
-
             }
         }
         public  void DeleteHuman(int id)

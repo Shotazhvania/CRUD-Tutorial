@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace Project1.DapperCRUDs
 {
-    public static class BuildingDbCommands
+    public  class BuildingDbCommands : CRUDInterfaces.IBuildingCRUD
     {
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
 
         //CRUD of Building
-        public static List<Building> GetBuilding()
+        public  List<Building> GetBuilding()
         {
             string sqlString = @"
 SELECT [ID], [Address], [AnimalsName], [BuildDate]
@@ -29,7 +29,7 @@ FROM [Building]
             }
 
         }
-        public static void InsertBuilding(Building building)
+        public  void InsertBuilding(Building building)
         {
             string query = "INSERT INTO  dbo.Building(Address,AnimalsName, BuildDate) VALUES(@Address,@AnimalsName,@BuildDate)";
             using (SqlConnection cn = new SqlConnection(connectionString))
@@ -40,7 +40,7 @@ FROM [Building]
                 cn.Execute(query, building);
             }
         }
-        public static void UpdateBuilding(int oldID, Building building)
+        public  void UpdateBuilding(int oldID, Building building)
         {
             string query = "UPDATE Building SET Address = @NewAddress, AnimalsName = @AnimalsName, BuildDate = @BuildDate WHERE ID = @oldID";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -53,7 +53,7 @@ FROM [Building]
 
             }
         }
-        public static void DeleteBuilding(int ID)
+        public  void DeleteBuilding(int ID)
         {
 
             string query = "DELETE FROM Building WHERE ID = @ID";

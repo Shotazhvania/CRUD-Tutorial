@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using Dapper;
 using System.Linq;
-
 namespace Project1.DapperCRUDs
 {
-    public static class CountryDbCommands
+    public class CountryDbCommands : CRUDInterfaces.ICountryCRUD
     {
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
 
         //CRUD of Country
-        public static List<Country> GetCountry()
+        public  List<Country> GetCountry()
         {
             string sqlString = @"
 SELECT [ID], [Name], [AnimalsName], [Area]
@@ -27,7 +26,7 @@ FROM [Country]
             }
 
         }
-        public static void InsertCountry(Country country)
+        public  void InsertCountry(Country country)
         {
             string query = "INSERT INTO  dbo.Country(Name,AnimalsName, Area) VALUES(@Name,@AnimalsName,@Area)";
             using (SqlConnection cn = new SqlConnection(connectionString))
@@ -38,7 +37,7 @@ FROM [Country]
             }
         }
 
-        public static void UpdateCountry(Country country)
+        public  void UpdateCountry(int id, Country country)
         {
             string query = "UPDATE Country SET Name = @NewName, AnimalsName = @AnimalsName, Area = @Area WHERE ID = @ID";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -49,7 +48,7 @@ FROM [Country]
             }
         }
 
-        public static void DeleteCountry(int ID)
+        public  void DeleteCountry(int ID)
         {
 
             string query = "DELETE FROM Country WHERE ID = @ID";
@@ -60,5 +59,7 @@ FROM [Country]
                 connection.Execute(query, new { ID });
             }
         }
+
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Project1;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Project1.ADONetCRUDs
     {
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
         //CRUD of Appartment
-        public List<Appartment> GetTests2()
+        public List<Appartment> GetAppartment()
         {
             string sqlString = @"
 SELECT [ID], [AppartmentNo], [Area]
@@ -30,7 +31,7 @@ FROM [Appartment]
                         AppartmentNo = int.Parse(reader["AppartmentNo"].ToString()),
                         Area = int.Parse(reader["Area"].ToString()),
                     };
-                    appartment.Humans = HumanDbCommands.GetHumansByApartment(appartment.ID);
+                    appartment.Humans =  new HumanDbCommands().GetHumansByApartment(appartment.ID);
 
                     appartments.Add(appartment);
 
@@ -40,7 +41,7 @@ FROM [Appartment]
             }
 
         }
-        public void InsertData(Appartment appartment)
+        public void InsertAppartment(Appartment appartment)
         {
             string query = "INSERT INTO  dbo.Appartment(AppartmentNo,Area) VALUES(@AppartmentNo,@Area)";
             using (SqlConnection cn = new SqlConnection(connectionString))
@@ -53,7 +54,7 @@ FROM [Appartment]
                 cn.Close();
             }
         }
-        public void UpdateData(int oldID, Appartment appartment)
+        public void UpdateAppartment(int oldID, Appartment appartment)
         {
             string query = "UPDATE Appartment SET AppartmentNo = @NewAppartmentNo, Area = @Area WHERE ID = @oldID";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -68,7 +69,7 @@ FROM [Appartment]
 
             }
         }
-        public void DeleteData2(int ID)
+        public void DeleteAppartment(int ID)
         {
 
             string query = "DELETE FROM Appartment WHERE ID = @ID";

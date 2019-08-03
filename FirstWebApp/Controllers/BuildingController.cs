@@ -10,26 +10,57 @@ namespace FirstWebApp.Controllers
 {
     public class BuildingController : Controller
     {
-        public class WrapperBuilding
-        {
-            public List<Building> Buildings { get; set; }
-        }
-
+        //Building
         public IActionResult GetBuilding()
         {
-            List<Building> buildings = BuildingDbCommands.GetBuilding();
+            List<Building> buildings = new BuildingDbCommands().GetBuilding();
             return Json(buildings);
         }
 
-        public IActionResult IndexBuilding()
+        public IActionResult List()
         {
-            List<Building> buildings = BuildingDbCommands.GetBuilding();
-            return View(new Building
-            {
-                buildings = buildings
+            List<Building> buildings = new BuildingDbCommands().GetBuilding();
+            return View(buildings);
 
-            });
+        }
+        public IActionResult Details(int id)
+        {
+            List<Building> buildings = new BuildingDbCommands().GetBuilding();
+            Building building = buildings.First(a => a.ID == id);
+            return View(building);
+        }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            List<Building> buildings = new BuildingDbCommands().GetBuilding();
+            Building building = buildings.First(a => a.ID == id);
+            return View(building);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Building app)
+        {
+            new BuildingDbCommands().UpdateBuilding(app.ID, app);
+            return RedirectToAction("List");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            new BuildingDbCommands().DeleteBuilding(id);
+            return RedirectToAction("List");
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Building building)
+        {
+            new BuildingDbCommands().InsertBuilding(building);
+            return RedirectToAction("List");
         }
     }
 }

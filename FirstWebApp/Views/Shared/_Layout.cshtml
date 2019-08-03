@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+<head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FirstWebApp</title>
@@ -15,6 +15,47 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    <title> Dropdown Menu Using CSS</title>
+    <style type="text/css">
+        #nav {
+            width: 500px;
+            margin: auto;
+        }
+
+            #nav ul {
+                padding: 0;
+                list-style: none;
+            }
+
+                #nav ul li {
+                    float: left;
+                    text-align: center;
+                    width: 120px;
+                    margin: 1px;
+                }
+
+                    #nav ul li a {
+                        color: #fff;
+                        text-decoration: none;
+                        font-family: Calibri;
+                        background: #0a0;
+                        display: block;
+                        padding: 10px;
+                    }
+
+                        #nav ul li a:hover {
+                            background: #0e0;
+                            color: #000;
+                        }
+
+                    #nav ul li ul {
+                        display: none;
+                    }
+
+                    #nav ul li:hover ul {
+                        display: block;
+                    }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -30,13 +71,18 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Appartment" asp-action="List">Appartments</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a  asp-controller="Country" asp-action="List">Countries</a></li>
+                        <li><a  asp-controller="Building" asp-action="List">Buildings</a></li>
+                        <li><a  asp-controller="Appartment" asp-action="List">Appartments</a></li>
+                        <li><a  asp-controller="Human" asp-action="List">Humans</a></li>
+                      
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
 
                 </ul>
             </div>
+            
         </div>
     </nav>
 

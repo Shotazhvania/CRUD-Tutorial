@@ -1,0 +1,42 @@
+﻿@model Project1.Building
+
+<div>
+    <h4>Building</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AnimalsName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AnimalsName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BuildDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BuildDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="List">Back to List</a>
+</div>

@@ -10,7 +10,6 @@ namespace Project1.Work
         public string Name { get; set; }
         public string AnimalsName { get; set; }
         public int Area { get; set; }
-        public Town[] Towns { get; set; }
         public string Description
         {
             get
