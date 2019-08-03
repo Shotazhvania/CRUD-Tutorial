@@ -6,7 +6,7 @@ namespace Project1
     {
         public int ID { get; set; }
         public int AppartmentNo { get; set; }
-        public int Area { get; internal set; }
+        public int Area { get; set; }
         public List<Human> Humans { get; set; } = new List<Human>();
         public string Description
         {

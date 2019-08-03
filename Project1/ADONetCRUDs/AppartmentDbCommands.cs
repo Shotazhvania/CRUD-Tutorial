@@ -13,7 +13,7 @@ namespace Project1.ADONetCRUDs
         {
             string sqlString = @"
 SELECT [ID], [AppartmentNo], [Area]
-FROM [Appartament]
+FROM [Appartment]
 ";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -42,7 +42,7 @@ FROM [Appartament]
         }
         public void InsertData(Appartment appartment)
         {
-            string query = "INSERT INTO  dbo.Appartament(AppartmentNo,Area) VALUES(@AppartmentNo,@Area)";
+            string query = "INSERT INTO  dbo.Appartment(AppartmentNo,Area) VALUES(@AppartmentNo,@Area)";
             using (SqlConnection cn = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, cn))
             {
@@ -55,15 +55,13 @@ FROM [Appartament]
         }
         public void UpdateData(int oldID, Appartment appartment)
         {
-            string query = "UPDATE Appartament SET AppartmentNo = @NewAppartmentNo, Are = @Area, HumansName = @HumansName BirthDate = @BirthDate WHERE ID = @oldID";
+            string query = "UPDATE Appartment SET AppartmentNo = @NewAppartmentNo, Area = @Area WHERE ID = @oldID";
             using (SqlConnection connection = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {
                 cmd.Parameters.AddWithValue("@oldID", oldID);
                 cmd.Parameters.AddWithValue("@NewAppartmentNo", appartment.AppartmentNo);
                 cmd.Parameters.AddWithValue("@Area", appartment.Area);
-                // cmd.Parameters.AddWithValue("@HumansName", appartment.HumansName);
-                //cmd.Parameters.AddWithValue("@BirthDate", appartment.BirthDate);
                 connection.Open();
 
                 cmd.ExecuteNonQuery();
@@ -73,7 +71,7 @@ FROM [Appartament]
         public void DeleteData2(int ID)
         {
 
-            string query = "DELETE FROM Appartament WHERE ID = @ID";
+            string query = "DELETE FROM Appartment WHERE ID = @ID";
             using (SqlConnection connection = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(query, connection))
             {

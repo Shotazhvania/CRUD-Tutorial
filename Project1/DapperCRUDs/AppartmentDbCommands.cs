@@ -7,23 +7,23 @@ using System.Linq;
 
 namespace Project1.DapperCRUDs
 {
-    public class AppartmentDbCommands : CRUDInterfaces.IAppartmentCRUD
+    public static class AppartmentDbCommands
     {
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
 
         //CRUD of Building
-        public List<Appartment> GetTests2()
+        public static List<Appartment> GetTests2()
         {
             string sqlString = @"
 SELECT [ID], [AppartmentNo], [Area]
-FROM [Appartament]
+FROM [Appartment]
 ";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(sqlString, connection);
-
+                 
                 connection.Open();
-
+  
                 List<Appartment> appartments = connection.Query<Appartment>(sqlString).ToList();
 
                 return appartments;
@@ -31,9 +31,9 @@ FROM [Appartament]
             }
 
         }
-        public void InsertData(Appartment appartment)
+        public static void InsertData(Appartment appartment)
         {
-            string query = "INSERT INTO  dbo.Appartament(AppartmentNo,Area) VALUES(@AppartmentNo,@Area)";
+            string query = "INSERT INTO  dbo.Appartment(AppartmentNo,Area) VALUES(@AppartmentNo,@Area)";
             using (SqlConnection cn = new SqlConnection(connectionString))
             
             {
@@ -43,7 +43,7 @@ FROM [Appartament]
                 cn.Close();
             }
         }
-        public void UpdateData(int oldID, Appartment appartment)
+        public static void UpdateData(int oldID, Appartment appartment)
         {
             string query = "UPDATE Appartament SET AppartmentNo = @NewAppartmentNo, Are = @Area, HumansName = @HumansName BirthDate = @BirthDate WHERE ID = @oldID";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -56,7 +56,7 @@ FROM [Appartament]
 
             }
         }
-        public void DeleteData2(int ID)
+        public static void DeleteData2(int ID)
         {
 
             string query = "DELETE FROM Appartament WHERE ID = @ID";

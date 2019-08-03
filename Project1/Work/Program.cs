@@ -7,11 +7,11 @@ using Project1.DapperCRUDs;
 
 namespace Project1
 {
-    public class Program
+    public static class Program
     {
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
 
-        static CRUDInterfaces.IAppartmentCRUD appartmentDb = new DapperCRUDs.AppartmentDbCommands();
+        static CRUDInterfaces.IAppartmentCRUD appartmentDb = new ADONetCRUDs.AppartmentDbCommands();
         static CRUDInterfaces.IBuildingCRUD buildingtDb = new ADONetCRUDs.BuildingDbCommands();
         static CRUDInterfaces.ICountryCRUD  countrytDb = new ADONetCRUDs.CountryDbCommands();
         static CRUDInterfaces.IHumanCRUD humantDb = new DapperCRUDs.HumanDbCommands();
@@ -21,32 +21,40 @@ namespace Project1
             bool Numb2 = true;
             while (Numb2)
             {
-                Console.WriteLine("Which information Do you want to fill? : Country(1), Building(2), Appartment(3), Human(4), Exit(5)");
-                int Number;
-                Number = int.Parse(Console.ReadLine());
-                switch (Number)
+                try
                 {
-                    case 1:
-                        ProcessCountry();
-                        break;
+                    Console.WriteLine("Which information Do you want to fill? : Country(1), Building(2), Appartment(3), Human(4), Exit(5)");
+                    int Number;
+                    Number = int.Parse(Console.ReadLine());
 
-                    case 2:
-                        ProcessBuilding();
-                        break;
+                    switch (Number)
+                    {
+                        case 1:
+                            ProcessCountry();
+                            break;
 
-                    case 3:
-                        ProcessAppartment();
-                        break;
-                    case 4:
-                        ProcessHumans();
-                        break;
-                    default:                       
-                        Console.WriteLine("Exit !");
-                        break;
-                        
+                        case 2:
+                            ProcessBuilding();
+                            break;
+
+                        case 3:
+                            ProcessAppartment();
+                            break;
+                        case 4:
+                            ProcessHumans();
+                            break;
+                        default:
+                            Console.WriteLine("Exit !");
+                            break;
+                    }
+                }
+                catch (Exception x)
+                {
+                    Console.WriteLine(x.Message);
 
                 }
-                
+
+
             }
 
             Console.ReadKey();
@@ -312,6 +320,6 @@ namespace Project1
                 }
             }
         }
-       
+
     }
 }

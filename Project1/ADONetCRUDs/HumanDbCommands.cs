@@ -8,6 +8,7 @@ namespace Project1.ADONetCRUDs
     public static class HumanDbCommands
     {
         const string connectionString = @"Data Source=localhost;Initial Catalog=Project1Data; Integrated Security=true";
+
         //CRUD of Human
         public static List<Human> GetHumansByApartment(int appartmentId)
         {

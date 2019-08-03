@@ -5,35 +5,30 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FirstWebApp.Models;
-using Project1.ADONetCRUDs;
 using Project1;
+using Project1.ADONetCRUDs;
+using Project1.Work;
+using BuildingDbCommands = Project1.DapperCRUDs.BuildingDbCommands;
+using AppartmentDbCommands = Project1.DapperCRUDs.AppartmentDbCommands;
+using FirstWebApp.ViewModels;
 
 namespace FirstWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        public class Wrapper
-        {
-            public List<Human> Humen { get; set; }
-        }
-
-        public IActionResult GetHumans()
-        {
-
-            List<Human> humen = HumanDbCommands.GetHumans();
-
-            return Json(humen);
-        }
-
         public IActionResult Index()
         {
-            // listis wamogeba bazidan
-            List<Human> humen = HumanDbCommands.GetHumans();
-            
-            return View(new Wrapper
+            return View(new HomeIndexViewModel
             {
-                Humen = humen
+                Humen = HumanDbCommands.GetHumans(),
+                Appartments = AppartmentDbCommands.GetTests2(),
+                Countries = new CountryDbCommands().GetTests(),
+                Buildings = BuildingDbCommands.GetBuilding()
             });
+        }
+        public IActionResult Indexs()
+        {
+            return View();
         }
 
         public IActionResult About()
@@ -42,7 +37,6 @@ namespace FirstWebApp.Controllers
 
             return View();
         }
-
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";

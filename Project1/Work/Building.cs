@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace Project1
 {
 
     public class Building
     {
+        public List<Building> buildings;
+
         public int ID { get; set; }
         public string Address { get; internal set; }
         public string AnimalsName { get; set; }
